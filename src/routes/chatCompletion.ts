@@ -1,17 +1,38 @@
 import express, {Request, Response} from 'express';
-import {getResponse} from "../services/openAiService";
+import {getResponse, getStreamResponse} from "../services/openAiService";
 
 const router = express.Router();
 
 router.post('/chat', async (req: Request,res:Response) => {
-	const prompt = req.body.prompt;
+	const { prompt } = req.body;
 
 	try {
-		const response = await getResponse(prompt);
-		res.json({response});
-	} catch(error) {
+		const streamResponse$ = await getStreamResponse(prompt);
+		let data = "";
+		streamResponse$.subscribe(
+			partialResponse => {
+                 data += partialResponse;
+				 console.log(data);
+                 res.write(JSON.stringify({type: "success", data}));
+				 res.flushHeaders();
+			},
+			error => {
+				console.error(error);
+				res.write(JSON.stringify({type: "error", data: error.messsage}));
+				res.end();
+			},
+			() => res.end()
+			);
+	}
+	catch(error: any) {
 		console.error(error);
-		res.status(500).json("Interval Server Error");
+		res.json(error);
+		// res
+		// 	.status(error.statusCode)
+		// 	.json({
+		// 			type:"error",
+		// 			data: error.message
+		// 	});
 	}
 })
 
