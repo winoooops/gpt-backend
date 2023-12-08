@@ -3,17 +3,36 @@ import {getResponse, getStreamResponse} from "../services/openAiService";
 
 const router = express.Router();
 
+router.post('/reply', async (req: Request, res: Response) => {
+	const { prompt } = req.body;
+	console.log("prompt is now: " + prompt);
+
+	try {
+		const data = await getResponse(prompt);
+		res.json({type: "success", data });
+	} catch(error:any) {
+		console.error(error);
+		res.json({type:"error", data: error.message });
+	}
+});
+
+
 router.post('/chat', async (req: Request,res:Response) => {
 	const { prompt } = req.body;
+	console.log(prompt);
+
+	res.setHeader("Content-Type", "text/html; charset=UTF-8");
+	res.setHeader('Transfer-Encoding', "chunked");
 
 	try {
 		const streamResponse$ = await getStreamResponse(prompt);
 		let data = "";
 		streamResponse$.subscribe(
 			partialResponse => {
-                 data += partialResponse;
-				 console.log(data);
-                 res.write(JSON.stringify({type: "success", data}));
+                 // data += partialResponse;
+                 // res.write(JSON.stringify({type: "success", data}));
+				console.log(partialResponse);
+				 res.write(partialResponse);
 				 res.flushHeaders();
 			},
 			error => {
