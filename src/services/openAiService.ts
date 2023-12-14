@@ -2,7 +2,9 @@ import OpenAI from "openai";
 import dotenv from 'dotenv';
 import {isNotEmptyString} from "../utils/utils";
 import {Observable, from, concatMapTo, concatMap, of} from "rxjs";
-import {ChatCompletionChunk} from "openai/resources";
+import {Chat, ChatCompletionChunk} from "openai/resources";
+import {IMessage} from "./openAiService.type";
+import ChatCompletionMessageParam = Chat.ChatCompletionMessageParam;
 
 dotenv.config();
 const model = isNotEmptyString(process.env.OPENAI_API_MODEL) ? process.env.OPENAI_API_MODEL : 'gpt-3.5-turbo'
@@ -15,14 +17,11 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
 });
 
-export async function getResponse(prompt: string): Promise<string> {
+export async function getResponse(messages: ChatCompletionMessageParam[]): Promise<string> {
     try {
         const completion = await openai.chat.completions.create(
         {
-            messages: [
-                {role: 'system', content: 'You are a helpful assistant'},
-                {role: 'user', content: prompt}
-            ],
+            messages,
             model: model as string,
         });
 
