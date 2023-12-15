@@ -1,14 +1,13 @@
 import express, {Request, Response} from 'express';
-import {getResponse, getStreamResponse} from "../services/openAiService";
+import {getChatCompletion, getStreamResponse} from "../services/openAi.service";
 
 const router = express.Router();
 
 router.post('/reply', async (req: Request, res: Response) => {
-	const { messages } = req.body;
-	console.log("messages is now: " + messages);
+	const { prompt, parentMessageId } = req.body;
 
 	try {
-		const data = await getResponse(messages);
+		const data = await getChatCompletion(messages);
 		res.json({type: "success", data });
 	} catch(error:any) {
 		console.error(error);
