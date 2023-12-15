@@ -4,12 +4,13 @@ import {getResponse, getStreamResponse} from "../services/openAiService";
 const router = express.Router();
 
 router.post('/reply', async (req: Request, res: Response) => {
-	const { messages } = req.body;
-	console.log("messages is now: " + messages);
+	const { messages, prompt } = req.body;
+	console.log(messages);
+	console.log("prompt is now" + prompt)
 
 	try {
-		const data = await getResponse(messages);
-		res.json({type: "success", data });
+		const data = await getResponse(messages, prompt);
+		res.json({type: "success", data, prompt});
 	} catch(error:any) {
 		console.error(error);
 		res.json({type:"error", data: error.message });

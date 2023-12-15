@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import {isNotEmptyString} from "../utils/utils";
 import {Observable, from, concatMapTo, concatMap, of} from "rxjs";
 import {Chat, ChatCompletionChunk} from "openai/resources";
-import {IMessage} from "./openAiService.type";
 import ChatCompletionMessageParam = Chat.ChatCompletionMessageParam;
 
 dotenv.config();
@@ -17,11 +16,12 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
 });
 
-export async function getResponse(messages: ChatCompletionMessageParam[]): Promise<string> {
+export async function getResponse(messages: ChatCompletionMessageParam[], prompt: string): Promise<string> {
+	console.log(messages);
     try {
         const completion = await openai.chat.completions.create(
         {
-            messages,
+            messages: [...messages,{role: "user", content: prompt}],
             model: model as string,
         });
 
