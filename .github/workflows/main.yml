@@ -34,4 +34,4 @@ jobs:
           # user
           REMOTE_USER: 'root'
           # target
-          TARGET: "/openai/gpt-backend"
+          TARGET: "/root/openai/gpt-backend"
