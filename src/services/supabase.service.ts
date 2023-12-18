@@ -27,12 +27,12 @@ export async function getChatMessageFromId(parentMessageId: string) {
   return data;
 }
 
-export async function saveChatMessage(role: string, text: string, parentMessageId?: string) {
+export async function saveChatMessage(role: string, content: string, parentMessageId?: string) {
     const { data, error } = await supabase.from('messages')
       .insert([
         { content: {
             role,
-            text
+            content
           },
           parentMessageId
         }
@@ -41,7 +41,7 @@ export async function saveChatMessage(role: string, text: string, parentMessageI
       .single();
 
     if (error) {
-        throw error;
+      throw error;
     }
 
     return data;

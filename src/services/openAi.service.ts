@@ -17,8 +17,6 @@ const openai = new OpenAI({
 });
 
 export async function getChatCompletion(prompt: string, context?: ChatCompletionMessageParam): Promise<string> {
-    console.log("context is:")
-    console.log(context);
     try {
       const messages: ChatCompletionMessageParam[] = [];
       if(context) {
