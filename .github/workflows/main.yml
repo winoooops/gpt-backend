@@ -41,7 +41,7 @@ jobs:
           TARGET: "/root/openai/gpt-backend"
          
       - name: Kill previous process
-        run: kill $(lsof -i :${{ secrets.PORT }})
+        run: kill $(lsof -t -i:9000)
 
       - name: start dev server
         run: npm run dev        
