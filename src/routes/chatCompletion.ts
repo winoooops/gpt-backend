@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import {getChatCompletion, getStreamResponse} from "../services/openAi.service";
+import {saveChatMessage} from "../services/supabase.service";
 
 const router = express.Router();
 
@@ -7,8 +8,14 @@ router.post('/reply', async (req: Request, res: Response) => {
 	const { prompt, parentMessageId } = req.body;
 
 	try {
-		const data = await getChatCompletion(messages);
-		res.json({type: "success", data });
+    // save the prompt to supabase
+    await saveChatMessage("user", prompt, parentMessageId);
+    // get reply from openai api
+		const reply = await getChatCompletion(prompt);
+    // save the reply to supabase
+    await saveChatMessage("assistant", reply, parentMessageId);
+
+		res.json({type: "success", reply });
 	} catch(error:any) {
 		console.error(error);
 		res.json({type:"error", data: error.message });
