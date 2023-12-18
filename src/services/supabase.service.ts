@@ -17,7 +17,7 @@ if(supabaseKey && supabaseUrl) {
 export async function getChatMessageFromId(parentMessageId: string) {
   const { data, error } = await supabase.from('messages')
     .select("*")
-    .eq("parentMessageId", parentMessageId)
+    .eq("id", parentMessageId)
     .single()
 
   if(error) {
