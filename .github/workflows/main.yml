@@ -1,0 +1,37 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # install node.js
+      - name: Install node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: lts/*
+      
+      # Deploy to server
+      - name: Deploy to server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          # private key
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          # Source
+          SOURCE: 'dist/'
+          # server ip
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          # user
+          REMOTE_USER: 'root'
+          # target
+          TARGET: "/openai/gpt-backend"
