@@ -45,6 +45,8 @@ jobs:
           PID=$(lsof -t -i:9000)
           if [ -n "$PID" ]; then
             kill $PID
+          else 
+            echo "No process found running on port 9000"
           fi
 
       - name: start dev server
