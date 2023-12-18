@@ -32,7 +32,7 @@ jobs:
           # private key
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           # SCP
-          ARGS: '-avzr --delete'
+          ARGS: '-avzr'
           # server ip
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           # user
