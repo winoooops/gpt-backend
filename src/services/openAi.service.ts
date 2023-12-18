@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import {isNotEmptyString} from "../utils/utils";
-import {Observable, from, concatMapTo, concatMap, of} from "rxjs";
-import {Chat, ChatCompletionChunk} from "openai/resources";
+import {Observable} from "rxjs";
+import {Chat} from "openai/resources";
 import ChatCompletionMessageParam = Chat.ChatCompletionMessageParam;
 
 dotenv.config();
@@ -16,20 +16,28 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
 });
 
-export async function getChatCompletion(messages: ChatCompletionMessageParam[]): Promise<string> {
+export async function getChatCompletion(prompt: string, context?: ChatCompletionMessageParam): Promise<string> {
+    console.log("context is:")
+    console.log(context);
     try {
-        const completion = await openai.chat.completions.create(
-        {
-            messages,
-            model: model as string,
-        });
+      const messages: ChatCompletionMessageParam[] = [];
+      if(context) {
+        messages.push(context);
+      }
+      messages.push({role: 'user', content: prompt});
 
-        const choice = completion.choices[0];
-        if(choice?.message?.content) {
-            return choice.message.content;
-        } else {
-            throw new Error('invalid response');
-        }
+      const completion = await openai.chat.completions.create(
+      {
+        messages,
+        model: model as string,
+      });
+
+      const choice = completion.choices[0];
+      if(choice?.message?.content) {
+        return choice.message.content;
+      } else {
+        return "Error occur";
+      }
     } catch(error: any) {
         throw { statusCode: error.status, message: error.message };
     }

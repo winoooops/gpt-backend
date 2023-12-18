@@ -14,8 +14,17 @@ if(supabaseKey && supabaseUrl) {
   throw new Error('Missing SUPABASE_API_KEY or SUPABASE_API_URL environment variable');
 }
 
-export async function getChatMessageFromId(messageId: string) {
+export async function getChatMessageFromId(parentMessageId: string) {
+  const { data, error } = await supabase.from('messages')
+    .select("*")
+    .eq("parentMessageId", parentMessageId)
+    .single()
 
+  if(error) {
+    throw new Error("Failed to get message from id: " + parentMessageId);
+  }
+
+  return data;
 }
 
 export async function saveChatMessage(role: string, text: string, parentMessageId?: string) {

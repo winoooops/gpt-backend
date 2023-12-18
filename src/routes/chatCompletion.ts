@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 import {getChatCompletion, getStreamResponse} from "../services/openAi.service";
-import {saveChatMessage} from "../services/supabase.service";
+import {getChatMessageFromId, saveChatMessage} from "../services/supabase.service";
 
 const router = express.Router();
 
@@ -8,10 +8,17 @@ router.post('/reply', async (req: Request, res: Response) => {
 	const { prompt, parentMessageId } = req.body;
 
 	try {
+    let parentMessage;
+
     // save the prompt to supabase
     await saveChatMessage("user", prompt, parentMessageId);
+
+    if(parentMessageId) {
+      // find the parent message
+      parentMessage = await getChatMessageFromId(parentMessageId);
+    }
     // get reply from openai api
-		const reply = await getChatCompletion(prompt);
+		const reply = await getChatCompletion(prompt, parentMessage?.content);
     // save the reply to supabase
     await saveChatMessage("assistant", reply, parentMessageId);
 
@@ -32,7 +39,6 @@ router.post('/chat', async (req: Request,res:Response) => {
 
 	try {
 		const streamResponse$ = await getStreamResponse(prompt);
-		let data = "";
 		streamResponse$.subscribe(
 			partialResponse => {
                  // data += partialResponse;
@@ -52,12 +58,6 @@ router.post('/chat', async (req: Request,res:Response) => {
 	catch(error: any) {
 		console.error(error);
 		res.json(error);
-		// res
-		// 	.status(error.statusCode)
-		// 	.json({
-		// 			type:"error",
-		// 			data: error.message
-		// 	});
 	}
 })
 
