@@ -27,6 +27,8 @@ jobs:
         env:
           # private key
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          # SCP
+          ARGS: '-avzr --delete'
           # Source
           SOURCE: 'dist/'
           # server ip
