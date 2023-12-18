@@ -40,6 +40,5 @@ jobs:
           # target
           TARGET: "/root/openai/gpt-backend"
 
-      - name: start dev server
-        run: npm run dev        
+      # will take care test and run later
          
