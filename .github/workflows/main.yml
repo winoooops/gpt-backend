@@ -44,5 +44,5 @@ jobs:
         run: kill $(lsof -i :${{ secrets.PORT }})
 
       - name: start dev server
-      - run: npm run dev        
+        run: npm run dev        
          
