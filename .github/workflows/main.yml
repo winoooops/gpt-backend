@@ -39,15 +39,6 @@ jobs:
           REMOTE_USER: 'root'
           # target
           TARGET: "/root/openai/gpt-backend"
-         
-      - name: Kill previous process
-        run: |
-          PID=$(lsof -t -i:9000)
-          if [ -n "$PID" ]; then
-            kill $PID
-          else 
-            echo "No process found running on port 9000"
-          fi
 
       - name: start dev server
         run: npm run dev        
