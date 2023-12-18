@@ -1,4 +1,5 @@
 export interface SupabaseMessage {
+  id: string;
   createdAt: string;
   content: {
     role: string;

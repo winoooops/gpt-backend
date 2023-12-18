@@ -37,7 +37,8 @@ export async function saveChatMessage(role: string, text: string, parentMessageI
           parentMessageId
         }
       ])
-      .select();
+      .select()
+      .single();
 
     if (error) {
         throw error;

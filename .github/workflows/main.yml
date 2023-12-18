@@ -22,7 +22,7 @@ jobs:
           node-version: lts/*
           
       # install dependencies
-      - name: Install depedencies
+      - name: Install dependencies
         run: npm i
       
       # Deploy to server
