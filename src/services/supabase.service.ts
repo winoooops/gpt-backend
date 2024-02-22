@@ -14,6 +14,20 @@ if(supabaseKey && supabaseUrl) {
   throw new Error('Missing SUPABASE_API_KEY or SUPABASE_API_URL environment variable');
 }
 
+
+export async function getMessagesFromConversationId(conversationId: string) {
+  const { data, error } = await supabase.from("messages")
+    .select("*")
+    .eq("conversationId", conversationId);
+
+  if(error) {
+    throw new Error("Failed to get messages from conversation id: " + conversationId);
+  }
+
+  return data;
+}
+
+
 export async function getChatMessageFromId(parentMessageId: string) {
   const { data, error } = await supabase.from('messages')
     .select("*")
@@ -27,14 +41,15 @@ export async function getChatMessageFromId(parentMessageId: string) {
   return data;
 }
 
-export async function saveChatMessage(role: string, content: string, parentMessageId?: string) {
+export async function saveChatMessage(role: string, content: string, conversationId: string, parentMessageId?: string) {
     const { data, error } = await supabase.from('messages')
       .insert([
         { content: {
             role,
             content
           },
-          parentMessageId
+          parentMessageId,
+          conversationId
         }
       ])
       .select()

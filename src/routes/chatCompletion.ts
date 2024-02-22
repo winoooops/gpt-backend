@@ -6,7 +6,7 @@ import {SupabaseMessage} from "../types/supabase";
 const router = express.Router();
 
 router.post('/reply', async (req: Request, res: Response) => {
-	const { prompt, parentMessageId } = req.body;
+	const { prompt, parentMessageId, conversationId } = req.body;
 
 	try {
     let parentMessage;
@@ -16,12 +16,12 @@ router.post('/reply', async (req: Request, res: Response) => {
     }
 
     // save the prompt to supabase
-    const userMessage: SupabaseMessage = await saveChatMessage("user", prompt, parentMessageId);
+    const userMessage: SupabaseMessage = await saveChatMessage("user", prompt,conversationId, parentMessageId);
 
     // get reply from openai api
 		const reply = await getChatCompletion(prompt, parentMessage?.content);
     // save the reply to supabase
-    await saveChatMessage("assistant", reply, userMessage.id);
+    await saveChatMessage("assistant", reply, conversationId, userMessage.id);
 
 		res.json({type: "success", reply });
 	} catch(error:any) {
@@ -31,6 +31,9 @@ router.post('/reply', async (req: Request, res: Response) => {
 });
 
 
+/*
+* temporarily paused, waiting text feature implemented
+* */
 router.post('/chat', async (req: Request,res:Response) => {
 	const { prompt } = req.body;
 	console.log(prompt);
