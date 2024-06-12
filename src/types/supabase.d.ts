@@ -5,5 +5,6 @@ export interface SupabaseMessage {
     role: string;
     text: string;
   };
+  conversationId: string;
   parentMessageId?: string;
 }
