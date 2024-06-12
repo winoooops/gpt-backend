@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import dotenv from 'dotenv';
-import {isNotEmptyString} from "../utils/utils";
+import {isNotEmptyString} from "../../utils/utils";
 import {Observable} from "rxjs";
 import {Chat} from "openai/resources";
 import ChatCompletionMessageParam = Chat.ChatCompletionMessageParam;
