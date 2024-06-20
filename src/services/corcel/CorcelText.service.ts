@@ -1,5 +1,5 @@
 import {CorcelBaseService} from "./CorcelBase.service";
-import {ICorcelBody, ICorcelMessage, ICorcelResponse} from "./corcel.type";
+import {ICorcelBody, ICorcelMessage, ICorcelResponse} from "../../types/corcel";
 import {Readable} from "stream";
 
 export class CorcelTextService extends CorcelBaseService {

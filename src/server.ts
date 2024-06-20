@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import dotenv from "dotenv";
 import chatRoute from "./routes/chatCompletion";
+import cryptoRoute from './routes/crypto';
 import cors from 'cors';
 
 
@@ -16,7 +17,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // routes
-app.use('/api', chatRoute);
+app.use('/api/chat', chatRoute);
+
+app.use('/api/crypto', cryptoRoute);
 
 // server start
 const PORT = process.env.PORT || 3000;

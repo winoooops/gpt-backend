@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import {isNotEmptyString} from "../../utils/utils";
-import {ICorcelBody} from "./corcel.type";
+import {ICorcelBody} from "../../types/corcel";
 import {CorcelOptions} from "./CorcelOptions";
 import axios from "axios";
-import {AxiosClient} from "../axiosClient";
+import {CorcelAxiosClient} from "../axios/CorcelAxiosClient";
 import {Readable} from "stream";
 
 dotenv.config();
@@ -24,7 +24,7 @@ export class CorcelBaseService {
 
 
   constructor(endpoint: string) {
-    this.corcelApiUrl = `${corcelApiUrl}${endpoint}`;
+    this.corcelApiUrl = endpoint;
     this.corcelApiKey = corcelApiKey;
   }
 
@@ -35,7 +35,7 @@ export class CorcelBaseService {
 
   async sendStreamRequest(body: ICorcelBody): Promise<Readable> {
     try {
-      const req = new AxiosClient(this.corcelApiKey);
+      const req = new CorcelAxiosClient(this.corcelApiKey);
       const response = await req.post(this.corcelApiUrl, body, {
         responseType: "stream"
       });

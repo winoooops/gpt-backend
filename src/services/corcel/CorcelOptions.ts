@@ -1,4 +1,4 @@
-import {ICorcelBody, ICorcelOptions} from "./corcel.type";
+import {ICorcelBody, ICorcelOptions} from "../../types/corcel";
 
 export class CorcelOptions implements ICorcelOptions {
   method: string;
