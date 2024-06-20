@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 import dotenv from "dotenv";
 import chatRoute from "./routes/chatCompletion";
-import cryptoRoute from './routes/crypto';
+import cryptoRoute from './routes/crypto/crypto';
 import cors from 'cors';
 
 

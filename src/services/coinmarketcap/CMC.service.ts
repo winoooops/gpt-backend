@@ -1,4 +1,5 @@
 import {CMCAxiosClient} from "../axios/CMCAxiosClient";
+import {ICMCTrendingParams} from "../../types/CMC";
 
 export class CMCService {
   client: CMCAxiosClient;
@@ -6,7 +7,7 @@ export class CMCService {
     this.client = new CMCAxiosClient();
   }
 
-  fetchCurrencies(params: {}) {
-    return this.client.get("/v1/cryptocurrency/listings/latest?start=1&limit=100&sort=market_cap&cryptocurrency_type=all&tag=all", params);
+  fetchCurrencies(params: Partial<ICMCTrendingParams>) {
+    return this.client.get("/v1/cryptocurrency/trending/latest", params);
   }
 }
