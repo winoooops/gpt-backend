@@ -6,7 +6,7 @@ export class CMCService {
     this.client = new CMCAxiosClient();
   }
 
-  fetchCurrencies() {
-    return this.client.sendGetRequest("/v1/cryptocurrency/listings/latest?start=1&limit=100&sort=market_cap&cryptocurrency_type=all&tag=all");
+  fetchCurrencies(params: {}) {
+    return this.client.get("/v1/cryptocurrency/listings/latest?start=1&limit=100&sort=market_cap&cryptocurrency_type=all&tag=all", params);
   }
 }

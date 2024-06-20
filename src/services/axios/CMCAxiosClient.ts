@@ -1,5 +1,6 @@
-import {AxiosBaseClient} from "./AxiosBaseClient";
 import dotenv from "dotenv";
+import {AxiosInstance} from "axios";
+import {AxiosClientFactory} from "./AxiosBaseClient";
 
 dotenv.config();
 
@@ -8,10 +9,11 @@ if(!process.env.COINMARKETCAP_API_KEY || !process.env.COINMARKETCAP_API_URL) {
 }
 
 
-export class CMCAxiosClient extends AxiosBaseClient {
+export class CMCAxiosClient  {
   url: string;
+  client: AxiosInstance;
   constructor() {
-    super(
+    this.client = AxiosClientFactory.createClient(
       process.env.COINMARKETCAP_API_URL || "https://sandbox-api.coinmarketcap.com",
       {
       'X-CMC_PRO_API_KEY': process.env.COINMARKETCAP_API_KEY
@@ -19,7 +21,7 @@ export class CMCAxiosClient extends AxiosBaseClient {
     this.url = process.env.COINMARKETCAP_API_URL || "";
   }
 
-  sendGetRequest(url: string) {
-    return this.client.get(url);
+  get(url: string, params: {}) {
+    return this.client.get(url, params);
   }
 }

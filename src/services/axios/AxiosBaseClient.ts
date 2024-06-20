@@ -1,10 +1,9 @@
-import axios, {AxiosInstance} from "axios";
+import axios from "axios";
 
-export class AxiosBaseClient {
-  client: AxiosInstance;
-  constructor(baseUrl:string, headers: {}) {
-    this.client = axios.create({
-      baseURL: baseUrl,
+export class AxiosClientFactory {
+  static createClient(baseURL: string, headers: {}) {
+    return axios.create({
+      baseURL,
       headers
     })
   }

@@ -4,10 +4,9 @@ import {CMCService} from "./CMC.service";
 export async function CMCCurrencyHandler(req: Request, res: Response) {
   try {
     const currencyService = new CMCService();
-    const response = await currencyService.fetchCurrencies();
+    const response = await currencyService.fetchCurrencies(req.params);
     // console.log(response);
-    res.write(response.data);
-    res.end();
+    res.json(response.data);
   } catch (error) {
     console.error(`Error: ${error}`);
     res.status(404);

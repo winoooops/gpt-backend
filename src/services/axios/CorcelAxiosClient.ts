@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import {ICorcelBody} from "../../types/corcel";
-import {AxiosBaseClient} from "./AxiosBaseClient";
+import {AxiosInstance} from "axios";
+import {AxiosClientFactory} from "./AxiosBaseClient";
 dotenv.config();
 
 if(!process.env.CORCEL_API_KEY) {
@@ -10,9 +11,10 @@ if(!process.env.CORCEL_API_KEY) {
 /*
 * when the client is created, automatically inject apiKey
  */
-export class CorcelAxiosClient extends AxiosBaseClient{
+export class CorcelAxiosClient {
+  client: AxiosInstance;
   constructor(apiKey:string) {
-    super(
+    this.client = AxiosClientFactory.createClient(
       process.env.CORCEL_API_URL || "",
       {
       accept: "application/json",

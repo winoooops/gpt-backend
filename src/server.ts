@@ -17,14 +17,13 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // routes
-app.use('/api/chat', chatRoute);
-
 app.use('/api/crypto', cryptoRoute);
+app.use('/api/chat', chatRoute);
 
 // server start
 const PORT = process.env.PORT || 3000;
 app.listen(process.env.PORT, () => {
-	console.log("Server is up and running");
+	console.log(`Server is up and running on ${PORT}`);
 });
 
 
