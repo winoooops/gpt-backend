@@ -12,7 +12,7 @@ export class CMCAxiosClient extends AxiosBaseClient {
   url: string;
   constructor() {
     super(
-      process.env.COINMARKETCAP_API_URL || "https://sandbox-api.coinmarketcap.com/v1/",
+      process.env.COINMARKETCAP_API_URL || "https://sandbox-api.coinmarketcap.com",
       {
       'X-CMC_PRO_API_KEY': process.env.COINMARKETCAP_API_KEY
     });
