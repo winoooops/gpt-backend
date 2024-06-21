@@ -50,3 +50,6 @@ jobs:
           script: |
             whoami
             ls -la
+            cd openai/gpt-backend/
+            npm run start 
+            nohup npm run start > output.log 2>&1 &
