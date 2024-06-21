@@ -51,5 +51,18 @@ jobs:
             whoami
             ls -la
             cd openai/gpt-backend/
-            npm run start 
+            # Function to kill process running on a specific port
+            kill_port() {
+              PORT=$1
+              PID=$(lsof -t -i:$PORT)
+              if [ -n "$PID" ]; then
+                echo "Killing process $PID running on port $PORT"
+                kill -9 $PID
+              else
+                echo "No process running on port $PORT"
+              fi
+            }
+            # Kill process running on the specified port
+            kill_port ${{ secrets.REMOTE_PORT }}
+            # start the application in the background
             nohup npm run start > output.log 2>&1 &
