@@ -22,7 +22,9 @@ export class CMCAxiosClient  {
     this.url = process.env.COINMARKETCAP_API_URL || "";
   }
 
-  get(url: string, params: {}): Promise<CMCResponse> {
-    return this.client.get(url, params);
+  get<T>(url: string, params: T): Promise<CMCResponse> {
+    return this.client.get(url, {
+      params
+    });
   }
 }

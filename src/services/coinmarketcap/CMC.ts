@@ -21,8 +21,7 @@ function errorHandler(res: Response, error: unknown) {
 export async function CMCCurrencyIDMapHandler(req: Request, res: Response) {
   try {
     const cmcService = new CMCService();
-    const response = await cmcService.fetchCurrencyIDMap(req.params);
-    console.log(response);
+    const response = await cmcService.fetchCurrencyIDMap(req.query);
     res.json(response.data);
   } catch (error) {
     errorHandler(res, error);
@@ -33,8 +32,7 @@ export async function CMCCurrencyIDMapHandler(req: Request, res: Response) {
 export async function CMCCurrencyTrendingLatestHandler(req: Request, res: Response) {
   try {
     const cmcService = new CMCService();
-    const response = await cmcService.fetchCurrencyIDMap(req.params);
-    console.log(response);
+    const response = await cmcService.fetchCurrencyIDMap(req.query);
     res.json(response.data);
   } catch (error) {
     errorHandler(res, error);
@@ -44,8 +42,7 @@ export async function CMCCurrencyTrendingLatestHandler(req: Request, res: Respon
 export async function CMCFiatHandler(req: Request, res: Response) {
   try {
     const cmcService = new CMCService();
-    const response = await cmcService.fetchFiatMap(req.params);
-    console.log(response);
+    const response = await cmcService.fetchFiatMap(req.query);
     res.json(response.data);
   } catch (error) {
     errorHandler(res, error);
