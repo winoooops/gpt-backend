@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CMCCurrencyIDMapHandler } from "../../../services/coinmarketcap/CMC";
+import { CMCCurrencyIDMapHandler } from "../../../controllers/crypto/CMCController";
 
 const router = Router();
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CMCFiatHandler } from "../../../services/coinmarketcap/CMC";
+import { CMCFiatHandler } from "../../../controllers/crypto/CMCController";
 
 const router = Router();
 
