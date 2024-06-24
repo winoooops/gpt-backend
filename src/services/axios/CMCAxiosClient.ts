@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import {AxiosInstance} from "axios";
 import {AxiosClientFactory} from "./AxiosBaseClient";
+import {CMCResponse} from "../../types/CMC";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ export class CMCAxiosClient  {
     this.url = process.env.COINMARKETCAP_API_URL || "";
   }
 
-  get(url: string, params: {}) {
+  get(url: string, params: {}): Promise<CMCResponse> {
     return this.client.get(url, params);
   }
 }
