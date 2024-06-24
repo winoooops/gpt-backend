@@ -32,7 +32,7 @@ export async function CMCCurrencyIDMapHandler(req: Request, res: Response) {
 export async function CMCCurrencyTrendingLatestHandler(req: Request, res: Response) {
   try {
     const cmcService = new CMCService();
-    const response = await cmcService.fetchCurrencyIDMap(req.query);
+    const response = await cmcService.fetchTrendingCurrencies(req.query);
     res.json(response.data);
   } catch (error) {
     errorHandler(res, error);
