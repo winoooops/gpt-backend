@@ -26,6 +26,19 @@ export interface CMCCurrencyIDMapParams {
   aux: string;
 }
 
+export interface CMCCurrencyQuoteLatestParams {
+  id: number;
+  slug: string;
+  symbol: string;
+  convert: string;
+  convert_id: string;
+  aux: QuoteAuxItem[];
+  skip_invalid: boolean;
+}
+
+type QuoteAuxItem = ("first_historical_data" | "last_historical_data" | "is_active" | "status");
+
+
 export interface CMCCurrencyTrendingParams {
   start: number;
   limit: number;
