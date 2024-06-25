@@ -38,11 +38,7 @@ type QuoteAuxItem = ("first_historical_data" | "last_historical_data" | "is_acti
 type CMCCurrencyQuoteRequiredParams =
   { id: number }
   | { slug: string }
-  | { symbol: string }
-  | { id: number; slug: string }
-  | { id: number; symbol: string }
-  | { slug: string; symbol: string }
-  | { id: number; slug: string; symbol: string };
+  | { symbol: string };
 
 export type CMCCurrentQuoteLatestParamsRequired = Partial<CMCCurrencyQuoteLatestParams> & CMCCurrencyQuoteRequiredParams;
 
