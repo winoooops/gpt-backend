@@ -26,10 +26,7 @@ export interface CMCCurrencyIDMapParams {
   aux: string;
 }
 
-export interface CMCCurrencyQuoteLatestParams {
-  id: number;
-  slug: string;
-  symbol: string;
+interface CMCCurrencyQuoteLatestParams {
   convert: string;
   convert_id: string;
   aux: QuoteAuxItem[];
@@ -37,6 +34,18 @@ export interface CMCCurrencyQuoteLatestParams {
 }
 
 type QuoteAuxItem = ("first_historical_data" | "last_historical_data" | "is_active" | "status");
+
+type CMCCurrencyQuoteRequiredParams =
+  { id: number }
+  | { slug: string }
+  | { symbol: string }
+  | { id: number; slug: string }
+  | { id: number; symbol: string }
+  | { slug: string; symbol: string }
+  | { id: number; slug: string; symbol: string };
+
+export type CMCCurrentQuoteLatestParamsRequired = Partial<CMCCurrencyQuoteLatestParams> & CMCCurrencyQuoteRequiredParams;
+
 
 
 export interface CMCCurrencyTrendingParams {

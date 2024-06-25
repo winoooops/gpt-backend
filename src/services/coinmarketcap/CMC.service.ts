@@ -4,7 +4,7 @@ import {
   CMCResponse,
   CMCCurrencyTrendingParams,
   CMCCurrencyIDMapParams,
-  CMCCurrencyQuoteLatestParams
+  CMCCurrentQuoteLatestParamsRequired
 } from "../../types/CMC";
 
 export class CMCService {
@@ -21,7 +21,7 @@ export class CMCService {
     return this.client.get("/v1/cryptocurrency/map", params);
   }
 
-  fetchCurrencyQuoteLatest(params: Partial<CMCCurrencyQuoteLatestParams>): Promise<CMCResponse> {
+  fetchCurrencyQuoteLatest(params: CMCCurrentQuoteLatestParamsRequired): Promise<CMCResponse> {
     return this.client.get("/v2/cryptocurrency/quotes/latest", {
       ...params,
       aux: params.aux?.join(",")
