@@ -40,7 +40,12 @@ type CMCCurrencyQuoteRequiredParams =
   | { slug: string }
   | { symbol: string };
 
-export type CMCCurrentQuoteLatestParamsRequired = Partial<CMCCurrencyQuoteLatestParams> & CMCCurrencyQuoteRequiredParams;
+type CMCCurrencyQuoteConvert =
+  { convert: string; convert_id?: never } |
+  { convert?: never; convert_id: string } |
+  {}
+
+export type CMCCurrentQuoteLatestParamsRequired = Partial<CMCCurrencyQuoteLatestParams> & CMCCurrencyQuoteRequiredParams & CMCCurrencyQuoteConvert;
 
 
 

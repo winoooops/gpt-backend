@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import {AxiosInstance} from "axios";
 import {AxiosClientFactory} from "./AxiosBaseClient";
-import {CMCResponse} from "../../types/CMC";
+import {CMCResponse} from "../../types/coinmarketcap/CMC";
 
 dotenv.config();
 

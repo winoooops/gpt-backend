@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from "express"
 import {CMCService} from "../../services/coinmarketcap/CMC.service";
 import {CMCError} from "../../utils/CMCError";
-import {CMCCurrencyQuoteRequiredParams} from "../../types/CMC";
+import {CMCCurrencyQuoteRequiredParams} from "../../types/coinmarketcap/CMC";
 
 
 export async function CMCCurrencyIDMapHandler(req: Request, res: Response, next: NextFunction) {
@@ -28,9 +28,12 @@ export async function CMCCurrencyTrendingLatestHandler(req: Request, res: Respon
 export async function CMCCurrencyQuoteLatestHandler(req: Request, res: Response, next: NextFunction) {
   try {
     const cmcService = new CMCService();
-    const { id, slug, symbol } = req.query;
+    const { id, slug, symbol , convert, convert_id} = req.query;
     if(!id && !slug && !symbol) {
       return next(new CMCError(400, "missing required params"));
+    }
+    if(convert && convert_id) {
+      return next(new CMCError(400, "conflicting params."));
     }
     const response = await cmcService.fetchCurrencyQuoteLatest(req.query as CMCCurrencyQuoteRequiredParams);
     res.json(response.data);

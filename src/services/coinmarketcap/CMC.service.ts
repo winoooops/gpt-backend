@@ -5,7 +5,7 @@ import {
   CMCCurrencyTrendingParams,
   CMCCurrencyIDMapParams,
   CMCCurrentQuoteLatestParamsRequired
-} from "../../types/CMC";
+} from "../../types/coinmarketcap/CMC";
 
 export class CMCService {
   client: CMCAxiosClient;

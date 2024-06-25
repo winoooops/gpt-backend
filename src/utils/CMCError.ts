@@ -1,4 +1,4 @@
-import {CMCErrorResponse} from "../types/CMC";
+import {CMCErrorResponse} from "../types/coinmarketcap/CMC";
 
 export class CMCError implements CMCErrorResponse {
   status: {
